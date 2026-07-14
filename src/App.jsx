@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import { SavedProvider } from './context/SavedContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
           <div className="min-h-screen flex flex-col bg-amber-50">
             <Navbar />
             <main className="flex-1">
-              <h1 className="text-center py-20 text-stone-800">Coming soon...</h1>
+              <Routes>
+                <Route path="/" element={<Home />} />
+              </Routes>
             </main>
             <Footer />
           </div>
