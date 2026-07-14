@@ -1,16 +1,54 @@
-# React + Vite
+# Crumbl 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A warm and cozy recipe sharing web app. Users can browse recipes by category, view full recipe details with ingredients and steps, save their favorite recipes, and submit their own dishes to the community.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Planned Features
 
-## React Compiler
+- Browse and search recipes by category (Breakfast, Lunch, Dinner, Desserts)
+- View full recipe details with ingredients, steps, prep time, and servings
+- Save favorite recipes to a personal collection
+- Submit your own recipes through a form
+- User registration and login with protected routes
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- React Router
+- Tailwind CSS
+- shadcn/ui
+- Lucide React
+- Context API (AuthContext, SavedContext)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Structure
+src/
+├── components/
+│   ├── ui/
+│   ├── Navbar.jsx
+│   ├── Footer.jsx
+│   ├── RecipeCard.jsx
+│   └── ProtectedRoute.jsx
+├── context/
+│   ├── AuthContext.jsx
+│   └── SavedContext.jsx
+├── pages/
+│   ├── Home.jsx
+│   ├── Recipes.jsx
+│   ├── RecipeDetails.jsx
+│   ├── Submit.jsx
+│   ├── Saved.jsx
+│   ├── Login.jsx
+│   └── Register.jsx
+├── App.jsx
+└── main.jsx
+
+## Getting Started
+
+```bash
+git clone https://github.com/tuhamaina-blip/crumbl.git
+cd crumbl
+npm install
+npm run dev
+```
+
