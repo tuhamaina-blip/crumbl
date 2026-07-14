@@ -1,6 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Search } from 'lucide-react';
 
 function Home() {
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/recipes?search=${query}`);
+    }
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -10,6 +22,24 @@ function Home() {
         <p className="text-stone-400 text-lg max-w-xl mx-auto mb-8">
           Discover, share, and save your favorite recipes from home cooks and food lovers around the world.
         </p>
+
+        {/* Search Bar */}
+        <form onSubmit={handleSearch} className="flex max-w-md mx-auto gap-2 mb-8">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search recipes..."
+            className="bg-white flex-1 px-4 py-3 rounded-md text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+          />
+          <button
+            type="submit"
+            className="bg-amber-500 hover:bg-amber-600 transition-colors px-4 py-3 rounded-md"
+          >
+            <Search className="h-4 w-4" />
+          </button>
+        </form>
+
         <div className="flex gap-4 justify-center">
           <Link
             to="/recipes"
