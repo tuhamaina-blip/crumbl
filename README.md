@@ -1,7 +1,13 @@
 # Crumbl 
 
-A warm and cozy recipe sharing web app. Users can browse recipes by category, view full recipe details with ingredients and steps, save their favorite recipes, and submit their own dishes to the community.
+Crumbl is a modern, responsive recipe sharing platform that enables users to discover, organize, and share recipes with ease. The application provides an intuitive experience for browsing recipes by category, searching by name or ingredient, viewing detailed cooking instructions, saving favorite recipes, and submitting original creations.
 
+The project emphasizes clean user interface design, responsive layouts, and modern frontend development practices while showcasing technologies such as React, React Router, Context API, Tailwind CSS, and component-based architecture.
+## Problem Statement
+
+Many recipe websites make it difficult to quickly find and organize recipes due to cluttered interfaces, excessive advertisements, and inconsistent layouts. Users also lack a simple way to save recipes they enjoy or contribute their own.
+
+Crumbl solves this problem by providing a clean and intuitive platform where users can browse recipes by category, search for dishes by name or ingredient, save favorites, and share their own recipes in one convenient place.
 
 ## Planned Features
 
