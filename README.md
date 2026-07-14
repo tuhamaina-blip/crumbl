@@ -22,6 +22,7 @@ A warm and cozy recipe sharing web app. Users can browse recipes by category, vi
 - Context API (AuthContext, SavedContext)
 
 ## Project Structure
+```
 src/
 ├── components/
 │   ├── ui/
@@ -42,6 +43,7 @@ src/
 │   └── Register.jsx
 ├── App.jsx
 └── main.jsx
+```
 
 ## Getting Started
 
