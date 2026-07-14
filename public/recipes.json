@@ -1,0 +1,249 @@
+[
+  {
+    "id": 1,
+    "title": "Classic Chocolate Chip Cookies",
+    "category": "Desserts",
+    "prepTime": "15 mins",
+    "cookTime": "12 mins",
+    "servings": 24,
+    "difficulty": "Easy",
+    "description": "Soft, chewy chocolate chip cookies with crispy edges and gooey centers.",
+    "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=500",
+    "author": "Alexander",
+    "ingredients": [
+      "2 1/4 cups all-purpose flour",
+      "1 tsp baking soda",
+      "1 tsp salt",
+      "1 cup butter, softened",
+      "3/4 cup granulated sugar",
+      "3/4 cup brown sugar",
+      "2 large eggs",
+      "2 tsp vanilla extract",
+      "2 cups chocolate chips"
+    ],
+    "steps": [
+      "Preheat oven to 375°F (190°C).",
+      "Mix flour, baking soda, and salt in a bowl.",
+      "Beat butter and sugars until creamy.",
+      "Add eggs and vanilla to butter mixture.",
+      "Gradually blend in flour mixture.",
+      "Stir in chocolate chips.",
+      "Drop rounded tablespoons onto ungreased baking sheets.",
+      "Bake for 9-11 minutes or until golden brown.",
+      "Cool on baking sheets for 2 minutes before transferring."
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Creamy Pasta Carbonara",
+    "category": "Dinner",
+    "prepTime": "10 mins",
+    "cookTime": "20 mins",
+    "servings": 4,
+    "difficulty": "Medium",
+    "description": "A rich and creamy Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
+    "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=500",
+    "author": "Christopher",
+    "ingredients": [
+      "400g spaghetti",
+      "200g pancetta or bacon",
+      "4 large eggs",
+      "100g Pecorino Romano cheese",
+      "100g Parmesan cheese",
+      "Black pepper to taste",
+      "Salt for pasta water"
+    ],
+    "steps": [
+      "Cook spaghetti in salted boiling water until al dente.",
+      "Fry pancetta until crispy.",
+      "Whisk eggs and cheese together.",
+      "Reserve 1 cup pasta water before draining.",
+      "Mix hot pasta with pancetta.",
+      "Remove from heat and add egg mixture.",
+      "Add pasta water gradually to achieve creamy consistency.",
+      "Season with black pepper and serve immediately."
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Avocado Toast with Poached Eggs",
+    "category": "Breakfast",
+    "prepTime": "5 mins",
+    "cookTime": "10 mins",
+    "servings": 2,
+    "difficulty": "Easy",
+    "description": "Creamy avocado spread on toasted sourdough topped with perfectly poached eggs.",
+    "image": "https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=500",
+    "author": "Olivia",
+    "ingredients": [
+      "2 slices sourdough bread",
+      "1 ripe avocado",
+      "2 eggs",
+      "1 tbsp white vinegar",
+      "Salt and pepper to taste",
+      "Red pepper flakes",
+      "Lemon juice"
+    ],
+    "steps": [
+      "Toast sourdough bread until golden.",
+      "Mash avocado with lemon juice, salt and pepper.",
+      "Bring water and vinegar to a gentle simmer.",
+      "Crack eggs into small bowls.",
+      "Slide eggs into simmering water.",
+      "Poach for 3-4 minutes.",
+      "Spread avocado on toast.",
+      "Top with poached eggs and red pepper flakes."
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Chicken Tikka Masala",
+    "category": "Dinner",
+    "prepTime": "20 mins",
+    "cookTime": "30 mins",
+    "servings": 4,
+    "difficulty": "Medium",
+    "description": "Tender chicken in a rich, spiced tomato cream sauce served with basmati rice.",
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500",
+    "author": "Liam",
+    "ingredients": [
+      "500g chicken breast, cubed",
+      "1 cup yogurt",
+      "2 tsp garam masala",
+      "1 tsp turmeric",
+      "1 tsp cumin",
+      "400g crushed tomatoes",
+      "1 cup heavy cream",
+      "2 cloves garlic",
+      "1 tbsp ginger",
+      "Fresh cilantro"
+    ],
+    "steps": [
+      "Marinate chicken in yogurt and spices for at least 1 hour.",
+      "Grill or pan-fry chicken until charred.",
+      "Sauté garlic and ginger in oil.",
+      "Add crushed tomatoes and simmer for 10 minutes.",
+      "Stir in cream and remaining spices.",
+      "Add chicken to sauce.",
+      "Simmer for 10 minutes.",
+      "Garnish with cilantro and serve with rice."
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Strawberry Smoothie Bowl",
+    "category": "Breakfast",
+    "prepTime": "10 mins",
+    "cookTime": "0 mins",
+    "servings": 1,
+    "difficulty": "Easy",
+    "description": "A thick, vibrant smoothie bowl topped with fresh fruits, granola, and honey.",
+    "image": "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=500",
+    "author": "Emma",
+    "ingredients": [
+      "1 cup frozen strawberries",
+      "1 frozen banana",
+      "1/2 cup Greek yogurt",
+      "2 tbsp almond milk",
+      "Toppings: granola, fresh berries, honey, chia seeds"
+    ],
+    "steps": [
+      "Blend frozen strawberries, banana, yogurt and almond milk.",
+      "Blend until thick and smooth.",
+      "Pour into a bowl.",
+      "Top with granola, fresh berries, honey and chia seeds.",
+      "Serve immediately."
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Beef Tacos",
+    "category": "Lunch",
+    "prepTime": "10 mins",
+    "cookTime": "15 mins",
+    "servings": 4,
+    "difficulty": "Easy",
+    "description": "Crispy taco shells filled with seasoned ground beef, fresh salsa, and toppings.",
+    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500",
+    "author": "Daniel",
+    "ingredients": [
+      "500g ground beef",
+      "8 taco shells",
+      "1 packet taco seasoning",
+      "1 cup shredded cheese",
+      "1 cup salsa",
+      "Sour cream",
+      "Shredded lettuce",
+      "Diced tomatoes"
+    ],
+    "steps": [
+      "Brown ground beef in a skillet.",
+      "Drain excess fat.",
+      "Add taco seasoning and water.",
+      "Simmer until thickened.",
+      "Warm taco shells in oven.",
+      "Fill shells with beef.",
+      "Top with cheese, lettuce, tomatoes, salsa and sour cream."
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Lemon Cheesecake",
+    "category": "Desserts",
+    "prepTime": "30 mins",
+    "cookTime": "60 mins",
+    "servings": 8,
+    "difficulty": "Hard",
+    "description": "A smooth and tangy lemon cheesecake with a buttery graham cracker crust.",
+    "image": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=500",
+    "author": "Sofia",
+    "ingredients": [
+      "2 cups graham cracker crumbs",
+      "1/2 cup melted butter",
+      "3 packages cream cheese",
+      "1 cup sugar",
+      "3 eggs",
+      "2 lemons, zested and juiced",
+      "1 tsp vanilla extract"
+    ],
+    "steps": [
+      "Mix crumbs and butter, press into pan.",
+      "Bake crust at 325°F for 10 minutes.",
+      "Beat cream cheese and sugar until smooth.",
+      "Add eggs one at a time.",
+      "Mix in lemon zest, juice and vanilla.",
+      "Pour over crust.",
+      "Bake for 55-60 minutes.",
+      "Cool completely before refrigerating.",
+      "Refrigerate for at least 4 hours before serving."
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Caesar Salad",
+    "category": "Lunch",
+    "prepTime": "15 mins",
+    "cookTime": "0 mins",
+    "servings": 4,
+    "difficulty": "Easy",
+    "description": "Crisp romaine lettuce with homemade Caesar dressing, croutons, and Parmesan.",
+    "image": "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=500",
+    "author": "Alicia",
+    "ingredients": [
+      "2 heads romaine lettuce",
+      "1/2 cup Caesar dressing",
+      "1 cup croutons",
+      "1/2 cup Parmesan cheese",
+      "Black pepper to taste",
+      "Lemon juice"
+    ],
+    "steps": [
+      "Wash and chop romaine lettuce.",
+      "Make or pour Caesar dressing into a large bowl.",
+      "Add lettuce and toss to coat.",
+      "Add croutons and Parmesan.",
+      "Season with pepper and lemon juice.",
+      "Serve immediately."
+    ]
+  }
+]
