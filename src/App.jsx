@@ -4,6 +4,7 @@ import { SavedProvider } from './context/SavedContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Recipes from './pages/Recipes';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <main className="flex-1">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/recipes" element={<Recipes />} />
               </Routes>
             </main>
             <Footer />
