@@ -2,15 +2,6 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCard from '@/components/RecipeCard';
 
-const API_KEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
-
-const categoryMap = {
-  Breakfast: 'breakfast',
-  Lunch: 'salad,soup,appetizer',
-  Dinner: 'main course',
-  Dessert: 'dessert',
-};
-
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +12,7 @@ function Recipes() {
   const searchTerm = searchParams.get('search') || '';
   const selectedCategory = searchParams.get('category') || 'All';
 
-  // Debounce — wait 500ms after typing stops before updating URL
+  // Debounce
   useEffect(() => {
     const timer = setTimeout(() => {
       setSearchParams({ search: inputValue, category: selectedCategory });
@@ -29,43 +20,28 @@ function Recipes() {
     return () => clearTimeout(timer);
   }, [inputValue]);
 
-  // Fetch when searchTerm or category changes
+  // Fetch from local JSON
   useEffect(() => {
     setLoading(true);
-
-    const mealType = selectedCategory !== 'All'
-      ? `&type=${categoryMap[selectedCategory] || selectedCategory.toLowerCase()}`
-      : '';
-
-    const query = searchTerm ? `&query=${searchTerm}` : '&query=pasta';
-
-    fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=20&addRecipeInformation=true${query}${mealType}`
-    )
+    fetch('/recipes.json')
       .then((res) => res.json())
       .then((data) => {
-        const mapped = data.results.map((meal) => ({
-          id: meal.id,
-          title: meal.title,
-          category: selectedCategory !== 'All' ? selectedCategory : meal.dishTypes?.[0] || 'General',
-          description: meal.summary?.replace(/<[^>]+>/g, '').slice(0, 120) + '...',
-          image: meal.image,
-          prepTime: `${meal.preparationMinutes > 0 ? meal.preparationMinutes : 15} mins`,
-          cookTime: `${meal.cookingMinutes > 0 ? meal.cookingMinutes : 30} mins`,
-          servings: meal.servings,
-          difficulty: meal.readyInMinutes <= 30 ? 'Easy' : meal.readyInMinutes <= 60 ? 'Medium' : 'Hard',
-          author: meal.sourceName || 'Spoonacular',
-        }));
-        setRecipes(mapped);
+        setRecipes(data);
         setLoading(false);
       })
       .catch(() => {
         setError('Failed to load recipes.');
         setLoading(false);
       });
-  }, [searchTerm, selectedCategory]);
+  }, []);
 
-  const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Dessert'];
+  const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Desserts'];
+
+  const filteredRecipes = recipes.filter((recipe) => {
+    const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   const handleCategory = (category) => {
     setSearchParams({ search: searchTerm, category });
@@ -106,11 +82,11 @@ function Recipes() {
       {/* Results */}
       {loading ? (
         <p className="text-center py-20 text-stone-500">Loading recipes...</p>
-      ) : recipes.length === 0 ? (
+      ) : filteredRecipes.length === 0 ? (
         <p className="text-center text-stone-400 py-20">No recipes match your search.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {recipes.map((recipe) => (
+          {filteredRecipes.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
