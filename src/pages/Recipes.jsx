@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCard from '@/components/RecipeCard';
 
+const API_KEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
+
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,25 +14,38 @@ function Recipes() {
   const selectedCategory = searchParams.get('category') || 'All';
 
   useEffect(() => {
-    fetch('/recipes.json')
+    setLoading(true);
+    
+    const mealType = selectedCategory !== 'All' ? `&type=${selectedCategory.toLowerCase()}` : '';
+    const query = searchTerm ? `&query=${searchTerm}` : '&query=chicken';
+
+    fetch(
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=20&addRecipeInformation=true${query}${mealType}`
+    )
       .then((res) => res.json())
       .then((data) => {
-        setRecipes(data);
+        const mapped = data.results.map((meal) => ({
+          id: meal.id,
+          title: meal.title,
+          category: meal.dishTypes?.[0] || selectedCategory,
+          description: meal.summary?.replace(/<[^>]+>/g, '').slice(0, 120) + '...',
+          image: meal.image,
+          prepTime: `${meal.preparationMinutes > 0 ? meal.preparationMinutes : 15} mins`,
+          cookTime: `${meal.cookingMinutes > 0 ? meal.cookingMinutes : 30} mins`,
+          servings: meal.servings,
+          difficulty: meal.readyInMinutes <= 30 ? 'Easy' : meal.readyInMinutes <= 60 ? 'Medium' : 'Hard',
+          author: meal.sourceName || 'Spoonacular',
+        }));
+        setRecipes(mapped);
         setLoading(false);
       })
       .catch(() => {
         setError('Failed to load recipes.');
         setLoading(false);
       });
-  }, []);
+  }, [searchTerm, selectedCategory]);
 
-  const categories = ['All', ...new Set(recipes.map((r) => r.category))];
-
-  const filteredRecipes = recipes.filter((recipe) => {
-    const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Dessert'];
 
   const handleSearch = (e) => {
     setSearchParams({ search: e.target.value, category: selectedCategory });
@@ -74,11 +89,11 @@ function Recipes() {
       </div>
 
       {/* Results */}
-      {filteredRecipes.length === 0 ? (
+      {recipes.length === 0 ? (
         <p className="text-center text-stone-400 py-20">No recipes match your search.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredRecipes.map((recipe) => (
+          {recipes.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
