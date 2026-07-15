@@ -27,7 +27,7 @@ function Recipes() {
       ? `&type=${categoryMap[selectedCategory] || selectedCategory.toLowerCase()}`
       : '';
 
-    const query = searchTerm ? `&query=${searchTerm}` : '&query=chicken';
+    const query = searchTerm ? `&query=${searchTerm}` : '';
 
     fetch(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=20&addRecipeInformation=true${query}${mealType}`
