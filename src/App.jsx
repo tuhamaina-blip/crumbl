@@ -9,12 +9,10 @@ import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function Layout() {
-  const location = useLocation();
-  const hideLayout = ['/login', '/register'].includes(location.pathname);
 
   return (
     <div className="min-h-screen flex flex-col bg-amber-50">
-      {!hideLayout && <Navbar />}
+      <Navbar />
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,7 +20,7 @@ function Layout() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </main>
-      {!hideLayout && <Footer />}
+      {<Footer />}
     </div>
   );
 }
