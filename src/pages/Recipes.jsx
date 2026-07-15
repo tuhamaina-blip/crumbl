@@ -4,6 +4,13 @@ import RecipeCard from '@/components/RecipeCard';
 
 const API_KEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
 
+const categoryMap = {
+  Breakfast: 'breakfast',
+  Lunch: 'salad,soup,appetizer',
+  Dinner: 'main course',
+  Dessert: 'dessert',
+};
+
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,8 +22,11 @@ function Recipes() {
 
   useEffect(() => {
     setLoading(true);
-    
-    const mealType = selectedCategory !== 'All' ? `&type=${selectedCategory.toLowerCase()}` : '';
+
+    const mealType = selectedCategory !== 'All'
+      ? `&type=${categoryMap[selectedCategory] || selectedCategory.toLowerCase()}`
+      : '';
+
     const query = searchTerm ? `&query=${searchTerm}` : '&query=chicken';
 
     fetch(
@@ -27,7 +37,7 @@ function Recipes() {
         const mapped = data.results.map((meal) => ({
           id: meal.id,
           title: meal.title,
-          category: meal.dishTypes?.[0] || selectedCategory,
+          category: selectedCategory !== 'All' ? selectedCategory : meal.dishTypes?.[0] || 'General',
           description: meal.summary?.replace(/<[^>]+>/g, '').slice(0, 120) + '...',
           image: meal.image,
           prepTime: `${meal.preparationMinutes > 0 ? meal.preparationMinutes : 15} mins`,
