@@ -16,10 +16,20 @@ function Recipes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
+  const [inputValue, setInputValue] = useState(searchParams.get('search') || '');
 
   const searchTerm = searchParams.get('search') || '';
   const selectedCategory = searchParams.get('category') || 'All';
 
+  // Debounce — wait 500ms after typing stops before updating URL
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchParams({ search: inputValue, category: selectedCategory });
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [inputValue]);
+
+  // Fetch when searchTerm or category changes
   useEffect(() => {
     setLoading(true);
 
@@ -27,7 +37,7 @@ function Recipes() {
       ? `&type=${categoryMap[selectedCategory] || selectedCategory.toLowerCase()}`
       : '';
 
-    const query = searchTerm ? `&query=${searchTerm}` : '';
+    const query = searchTerm ? `&query=${searchTerm}` : '&query=pasta';
 
     fetch(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=20&addRecipeInformation=true${query}${mealType}`
@@ -57,15 +67,10 @@ function Recipes() {
 
   const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Dessert'];
 
-  const handleSearch = (e) => {
-    setSearchParams({ search: e.target.value, category: selectedCategory });
-  };
-
   const handleCategory = (category) => {
     setSearchParams({ search: searchTerm, category });
   };
 
-  if (loading) return <p className="text-center py-20 text-stone-500">Loading recipes...</p>;
   if (error) return <p className="text-center py-20 text-red-500">{error}</p>;
 
   return (
@@ -77,8 +82,8 @@ function Recipes() {
         <input
           type="text"
           placeholder="Search recipes..."
-          value={searchTerm}
-          onChange={handleSearch}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           className="border border-amber-200 rounded-md px-3 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
         />
         <div className="flex gap-2 flex-wrap">
@@ -99,7 +104,9 @@ function Recipes() {
       </div>
 
       {/* Results */}
-      {recipes.length === 0 ? (
+      {loading ? (
+        <p className="text-center py-20 text-stone-500">Loading recipes...</p>
+      ) : recipes.length === 0 ? (
         <p className="text-center text-stone-400 py-20">No recipes match your search.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
