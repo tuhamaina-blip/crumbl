@@ -1,10 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Clock, Users, BookMarked } from 'lucide-react';
 import { useSaved } from '@/context/SavedContext';
+import { useAuth } from '@/context/AuthContext';
 
 function RecipeCard({ recipe }) {
   const { saveRecipe, unsaveRecipe, isSaved } = useSaved();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const saved = isSaved(recipe.id);
+
+  const handleSave = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    saved ? unsaveRecipe(recipe.id) : saveRecipe(recipe);
+  };
 
   return (
     <div className="border border-amber-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow bg-white">
@@ -33,8 +44,9 @@ function RecipeCard({ recipe }) {
             </span>
           </div>
           <button
-            onClick={() => saved ? unsaveRecipe(recipe.id) : saveRecipe(recipe)}
+            onClick={handleSave}
             className={`transition-colors ${saved ? 'text-amber-500' : 'text-stone-300 hover:text-amber-400'}`}
+            title={isAuthenticated ? (saved ? 'Unsave recipe' : 'Save recipe') : 'Sign in to save recipes'}
           >
             <BookMarked className="h-4 w-4" />
           </button>
