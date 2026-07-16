@@ -10,6 +10,7 @@ function Login() {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,10 +47,10 @@ function Login() {
       <div
         className="hidden md:block bg-cover bg-center relative"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800')`
+          backgroundImage: `url('https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800')`
         }}
       >
-        <div className="absolute inset-0 bg-stone-900/60" />
+        <div className="absolute inset-0 bg-stone-900/55" />
         <div className="absolute inset-0 flex flex-col justify-end p-10 text-white">
           <UtensilsCrossed className="h-8 w-8 text-amber-400 mb-4" />
           <h2 className="text-3xl font-bold mb-2">Welcome back to Crumbl</h2>
@@ -63,14 +64,14 @@ function Login() {
       <div className="flex items-center justify-center px-6 py-12 bg-amber-50">
         <div className="w-full max-w-sm">
 
-          {/* Mobile brand */}
-          <div className="flex items-center gap-2 mb-8 md:hidden">
+          {/* Brand */}
+          <div className="flex items-center gap-2 mb-6">
             <UtensilsCrossed className="h-6 w-6 text-amber-500" />
-            <span className="text-xl font-bold text-stone-800">Crumbl</span>
+            <span className="text-lg font-bold text-stone-800">Crumbl</span>
           </div>
 
-          <h2 className="text-2xl font-bold mb-1 text-stone-800">Sign in</h2>
-          <p className="text-stone-400 text-sm mb-8">Enter your credentials to continue</p>
+          <h2 className="text-2xl font-bold mb-1 text-stone-800">Welcome Back</h2>
+          <p className="text-stone-400 text-sm mb-6">Please enter your details to sign in to your account.</p>
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-md mb-4">
@@ -80,7 +81,7 @@ function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-4 bg-white border border-amber-200 rounded-xl p-6 shadow-sm">
             <div>
-              <label className="text-sm font-medium block mb-1.5 text-stone-700">Email</label>
+              <label className="text-sm font-medium block mb-1.5 text-stone-700">Email Address</label>
               <input
                 type="email"
                 name="email"
@@ -113,10 +114,23 @@ function Login() {
                 </button>
               </div>
             </div>
+
+            {/* Remember Me */}
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="accent-amber-500"
+              />
+              <label htmlFor="rememberMe" className="text-xs text-stone-500">Remember me</label>
+            </div>
+
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-amber-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-amber-600 transition-colors disabled:opacity-50 mt-2"
+              className="w-full bg-amber-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-amber-600 transition-colors disabled:opacity-50"
             >
               {isSubmitting ? 'Signing in...' : 'Sign In'}
             </button>
@@ -125,7 +139,7 @@ function Login() {
           <p className="text-sm text-center text-stone-400 mt-6">
             Don't have an account?{' '}
             <Link to="/register" className="text-amber-600 font-medium hover:underline">
-              Sign up
+              Join the community
             </Link>
           </p>
         </div>
