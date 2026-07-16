@@ -113,7 +113,7 @@ function Submit() {
       {step === 1 && (
         <div className="bg-white border border-amber-200 rounded-xl p-6 shadow-sm">
           <h2 className="font-semibold text-stone-800 mb-4 flex items-center gap-2">
-            <span className="text-amber-500">🍴</span> The Basics
+            <span className="text-amber-500"></span> The Basics
           </h2>
           <div className="space-y-4">
             <div>

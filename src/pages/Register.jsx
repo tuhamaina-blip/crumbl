@@ -1,148 +1,198 @@
-import { Link } from "react-router-dom";
-import { User, Mail, Lock } from "lucide-react";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+import { UtensilsCrossed, Eye, EyeOff } from 'lucide-react';
 
 function Register() {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    // accountType: 'Home Cook',
+  });
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    if (!formData.name || !formData.email || !formData.password) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    if (!agreed) {
+      setError('Please agree to the Terms of Service and Privacy Policy.');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const fakeToken = 'crumbl-token-123';
+      const fakeUser = {
+        id: 'u2',
+        email: formData.email,
+        name: formData.name,
+        accountType: formData.accountType,
+      };
+      register(fakeToken, fakeUser);
+      navigate('/login');
+    } catch (err) {
+      setError('Failed to create account. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <section className="min-h-screen flex items-center justify-center bg-stone-50 px-6 py-12">
-      <div className="w-full max-w-5xl grid lg:grid-cols-2 overflow-hidden rounded-2xl shadow-xl border border-stone-200 bg-white">
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
 
-        {/* Left Side */}
-        <div className="hidden lg:flex flex-col justify-center bg-amber-500 text-white p-12">
-          <h1 className="text-4xl font-bold mb-6">
-            Welcome to Crumbl
-          </h1>
-
-          <p className="text-amber-100 leading-7">
-            Discover delicious recipes, save your favorites, and share your own
-            creations with food lovers from around the world.
-          </p>
-
-          <div className="mt-10">
-            <div className="h-1 w-20 rounded-full bg-white/70"></div>
-          </div>
+      {/* Left — Image Side */}
+      <div className="hidden md:block relative">
+        <div className="h-full">
+          <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=600" className="w-full h-full object-cover" />
         </div>
+        <div className="absolute inset-0 bg-stone-900/50 flex flex-col justify-end p-10 text-white">
+          <h2 className="text-4xl font-bold mb-3">Start your culinary <span className="text-amber-400">legacy</span> today.</h2>
+          <p className="text-stone-300 text-sm max-w-sm">Join a community of home cooks and food lovers sharing the world's most cherished recipes.</p>
+        </div>
+      </div>
 
-        {/* Right Side */}
-        <div className="p-8 md:p-12">
-          <h2 className="text-3xl font-bold text-stone-900">
-            Create Account
-          </h2>
+      {/* Right — Form Side */}
+      <div className="flex items-center justify-center px-6 py-12 bg-amber-50">
+        <div className="w-full max-w-sm">
 
-          <p className="mt-2 text-stone-500">
-            Join Crumbl and start saving and sharing recipes.
-          </p>
+          {/* Brand */}
+          <div className="flex items-center gap-2 mb-6">
+            <UtensilsCrossed className="h-6 w-6 text-amber-500" />
+            <span className="text-lg font-bold text-stone-800">Crumbl</span>
+          </div>
 
-          <form className="mt-8 space-y-5">
+          <h2 className="text-2xl font-bold mb-1 text-stone-800">Create your account</h2>
+          <p className="text-stone-400 text-sm mb-6">Share, discover, and organize your favorite recipes.</p>
 
-            {/* Name */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-md mb-4">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4 bg-white border border-amber-200 rounded-xl p-6 shadow-sm">
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
-                Full Name
-              </label>
-
+              <label className="text-sm font-medium block mb-1.5 text-stone-700">Full Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your full name"
+                className="w-full border border-amber-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white text-stone-800"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium block mb-1.5 text-stone-700">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                className="w-full border border-amber-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white text-stone-800"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium block mb-1.5 text-stone-700">Password</label>
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" />
-
                 <input
-                  type="text"
-                  placeholder="John Doe"
-                  className="w-full rounded-lg border border-stone-300 py-3 pl-12 pr-4 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="At least 6 characters"
+                  className="w-full border border-amber-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white text-stone-800 pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-amber-500"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
             </div>
 
-            {/* Email */}
+            {/* Account Type
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
-                Email Address
-              </label>
-
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" />
-
-                <input
-                  type="email"
-                  placeholder="you@example.com"
-                  className="w-full rounded-lg border border-stone-300 py-3 pl-12 pr-4 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
-                />
+              <label className="text-sm font-medium block mb-1.5 text-stone-700">Account Type</label>
+              <div className="grid grid-cols-2 gap-2">
+                {['Home Cook', 'Professional'].map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, accountType: type })}
+                    className={`py-2 rounded-lg text-sm border transition-colors ${
+                      formData.accountType === type
+                        ? 'bg-amber-500 text-white border-amber-500'
+                        : 'bg-white text-stone-600 border-amber-200 hover:bg-amber-50'
+                    }`}
+                  >
+                    {type === 'Home Cook' ? '🍳' : '👨‍🍳'} {type}
+                  </button>
+                ))}
               </div>
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
-                Password
-              </label>
-
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" />
-
-                <input
-                  type="password"
-                  placeholder="••••••••"
-                  className="w-full rounded-lg border border-stone-300 py-3 pl-12 pr-4 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
-                />
-              </div>
-            </div>
-
-            {/* Confirm Password */}
-            <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
-                Confirm Password
-              </label>
-
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" />
-
-                <input
-                  type="password"
-                  placeholder="••••••••"
-                  className="w-full rounded-lg border border-stone-300 py-3 pl-12 pr-4 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
-                />
-              </div>
-            </div>
+            </div> */}
 
             {/* Terms */}
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-2">
               <input
                 type="checkbox"
-                className="mt-1 accent-amber-500"
+                id="agreed"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 accent-amber-500"
               />
-
-              <p className="text-sm text-stone-600">
-                I agree to the{" "}
-                <a
-                  href="#"
-                  className="text-amber-600 hover:text-amber-700 font-medium"
-                >
-                  Terms & Conditions
-                </a>
-              </p>
+              <label htmlFor="agreed" className="text-xs text-stone-500">
+                I agree to the{' '}
+                <a href="#" className="text-amber-600 hover:underline">Terms of Service</a>
+                {' '}and{' '}
+                <a href="#" className="text-amber-600 hover:underline">Privacy Policy</a>
+              </label>
             </div>
 
-            {/* Button */}
             <button
-              className="w-full rounded-lg bg-amber-500 py-3 font-semibold text-white transition hover:bg-amber-600"
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-amber-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-amber-600 transition-colors disabled:opacity-50"
             >
-              Create Account
+              {isSubmitting ? 'Creating account...' : 'Create Account →'}
             </button>
-
           </form>
 
-          {/* Login */}
-          <p className="mt-8 text-center text-stone-600">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="font-semibold text-amber-600 hover:text-amber-700"
-            >
-              Sign In
+          <p className="text-sm text-center text-stone-400 mt-6">
+            Already have an account?{' '}
+            <Link to="/login" className="text-amber-600 font-medium hover:underline">
+              Login here
             </Link>
           </p>
         </div>
-
       </div>
-    </section>
+    </div>
   );
 }
 
