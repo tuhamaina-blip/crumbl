@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCard from '@/components/RecipeCard';
+import { useRecipes } from '@/context/RecipeContext';
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -8,6 +9,7 @@ function Recipes() {
   const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('search') || '');
+  const { userRecipes } = useRecipes();
 
   const searchTerm = searchParams.get('search') || '';
   const selectedCategory = searchParams.get('category') || 'All';
@@ -37,11 +39,13 @@ function Recipes() {
 
   const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Desserts'];
 
-  const filteredRecipes = recipes.filter((recipe) => {
-    const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const allRecipes = [...userRecipes, ...recipes];
+
+  const filteredRecipes = allRecipes.filter((recipe) => {
+  const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
+  const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
+  return matchesSearch && matchesCategory;
+});
 
   const handleCategory = (category) => {
     setSearchParams({ search: searchTerm, category });
