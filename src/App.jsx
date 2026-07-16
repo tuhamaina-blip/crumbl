@@ -8,6 +8,7 @@ import Recipes from './pages/Recipes';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import Submit from './pages/Submit';
+import { RecipeProvider } from './context/RecipeContext';
 
 
 function Layout() {
@@ -33,7 +34,9 @@ function App() {
     <Router>
       <AuthProvider>
         <SavedProvider>
-          <Layout />
+          <RecipeProvider>
+            <Layout />
+          </RecipeProvider>
         </SavedProvider>
       </AuthProvider>
     </Router>
