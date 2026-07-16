@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Plus, Trash2, ChevronRight, ChevronLeft } from 'lucide-react';
+import { useRecipes } from '@/context/RecipeContext';
 
 function Submit() {
   const { user } = useAuth();
+  const { addRecipe } = useRecipes();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
@@ -61,11 +63,21 @@ function Submit() {
     }));
   };
 
-  const handlePublish = () => {
-    // In a real app this would save to a database
-    alert('Recipe published successfully!');
-    navigate('/recipes');
-  };
+ const handlePublish = () => {
+  addRecipe({
+    title: formData.title,
+    description: formData.description,
+    prepTime: `${formData.prepTime} mins`,
+    cookTime: '0 mins',
+    servings: Number(formData.servings),
+    category: formData.category,
+    difficulty: formData.difficulty,
+    image: formData.image,
+    ingredients: formData.ingredients.map((i) => `${i.qty} ${i.unit} ${i.name}`),
+    steps: formData.steps,
+  });
+  navigate('/recipes');
+};
 
   const inputClass = "w-full border border-amber-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white text-stone-800";
 
