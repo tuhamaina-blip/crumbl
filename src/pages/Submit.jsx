@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Plus, Trash2, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useRecipes } from '@/context/RecipeContext';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function Submit() {
   const { user } = useAuth();
@@ -63,8 +65,8 @@ function Submit() {
     }));
   };
 
- const handlePublish = () => {
-  addRecipe({
+const handlePublish = () => {
+  const recipeData = {
     title: formData.title,
     description: formData.description,
     prepTime: `${formData.prepTime} mins`,
@@ -75,16 +77,47 @@ function Submit() {
     image: formData.image,
     ingredients: formData.ingredients.map((i) => `${i.qty} ${i.unit} ${i.name}`),
     steps: formData.steps,
-  });
-  navigate('/recipes');
+  };
+
+  if (id) {
+    updateRecipe(Number(id), recipeData);
+  } else {
+    addRecipe(recipeData);
+  }
+  navigate('/saved');
 };
+const { id } = useParams();
+const { userRecipes, updateRecipe } = useRecipes();
+
+// Pre-fill form if editing
+useEffect(() => {
+  if (id) {
+    const existing = userRecipes.find((r) => String(r.id) === String(id));
+    if (existing) {
+      setFormData({
+        title: existing.title || '',
+        description: existing.description || '',
+        prepTime: existing.prepTime?.replace(' mins', '') || '',
+        servings: existing.servings || '',
+        category: existing.category || 'Dinner',
+        difficulty: existing.difficulty || 'Easy',
+        image: existing.image || '',
+        ingredients: existing.ingredients?.map((i) => {
+          const parts = i.split(' ');
+          return { qty: parts[0] || '', unit: parts[1] || '', name: parts.slice(2).join(' ') || '' };
+        }) || [{ name: '', qty: '', unit: '' }],
+        steps: existing.steps || [''],
+      });
+    }
+  }
+}, [id]);
 
   const inputClass = "w-full border border-amber-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white text-stone-800";
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-stone-800 mb-2">Share Your Masterpiece</h1>
+        <h1 className="text-3xl font-bold text-stone-800 mb-2">{id ? 'Edit Your Recipe' : 'Share Your Masterpiece'}</h1>
         <p className="text-stone-400 text-sm">Every great meal starts with a story. Help others recreate your favorite dishes by filling out this simple form.</p>
       </div>
 
@@ -386,7 +419,7 @@ function Submit() {
               onClick={handlePublish}
               className="bg-amber-500 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-amber-600 transition-colors"
             >
-              Publish Recipe →
+              {id ? 'Save Changes' : 'Publish Recipe'} →
             </button>
           </div>
         </div>
