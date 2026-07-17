@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Submit from './pages/Submit';
 import { RecipeProvider } from './context/RecipeContext';
 import Register from './pages/Register';
+import RecipeDetails from './pages/RecipeDetails';
 
 
 function Layout() {
@@ -22,6 +23,7 @@ function Layout() {
           <Route path="/" element={<Home />} />
           <Route path="/submit" element={<ProtectedRoute><Submit /></ProtectedRoute>} />
           <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipes/:id" element={<RecipeDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
