@@ -1,10 +1,23 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Clock, Users } from 'lucide-react';
 
 function Home() {
   const [query, setQuery] = useState('');
+  const [featured, setFeatured] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/recipes.json')
+      .then((res) => res.json())
+      .then((data) => {
+        const categories = ['Breakfast', 'Lunch', 'Dinner', 'Desserts'];
+        const picks = categories.map((cat) =>
+          data.find((r) => r.category === cat)
+        ).filter(Boolean);
+        setFeatured(picks);
+      });
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -24,13 +37,13 @@ function Home() {
         </p>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="flex max-w-md mx-auto gap-2 mb-8">
+        <form onSubmit={handleSearch} className="bg-white rounded-md flex max-w-md mx-auto gap-2 mb-8">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search recipes..."
-            className="bg-white flex-1 px-4 py-3 rounded-md text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+            className="flex-1 px-4 py-3 rounded-md text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
           <button
             type="submit"
@@ -56,8 +69,47 @@ function Home() {
         </div>
       </section>
 
+      {/* Featured Recipes */}
+      {featured.length > 0 && (
+        <section className="max-w-6xl mx-auto px-6 py-16">
+          <h2 className="text-2xl font-bold text-stone-800 mb-2">Featured Recipes</h2>
+          <p className="text-stone-400 text-sm mb-8">A taste of what's cooking across every category.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {featured.map((recipe) => (
+              <Link
+                key={recipe.id}
+                to={`/recipes/${recipe.id}`}
+                className="border border-amber-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow bg-white group"
+              >
+                <div className="relative">
+                  <img
+                    src={recipe.image}
+                    alt={recipe.title}
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-2 left-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">
+                    {recipe.category}
+                  </span>
+                </div>
+                <div className="p-3">
+                  <h3 className="font-semibold text-stone-800 text-sm mb-2 line-clamp-1">{recipe.title}</h3>
+                  <div className="flex gap-3 text-xs text-stone-400">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" /> {recipe.prepTime}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Users className="h-3 w-3" /> {recipe.servings} servings
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Categories Section */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
+      <section className="max-w-6xl mx-auto px-6 py-8">
         <h2 className="text-2xl font-bold mb-8 text-center text-stone-800">Browse by Category</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {['Breakfast', 'Lunch', 'Dinner', 'Desserts'].map((category) => (
@@ -84,7 +136,7 @@ function Home() {
         </Link>
       </section>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
