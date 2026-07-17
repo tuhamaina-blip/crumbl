@@ -29,43 +29,53 @@ function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-stone-900 text-white py-24 px-6 text-center">
-        <p className="text-sm uppercase tracking-widest text-amber-400 mb-4">Welcome to Crumbl</p>
-        <h1 className="text-5xl font-bold tracking-tight mb-6">Recipes Made with Love</h1>
-        <p className="text-stone-400 text-lg max-w-xl mx-auto mb-8">
-          Discover, share, and save your favorite recipes from home cooks and food lovers around the world.
-        </p>
+      <section
+        className="text-white py-24 px-6 text-center relative"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=1200')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+        >
+        <div className="absolute inset-0 bg-stone-900/70" />
+        <div className="relative z-10">
+          <p className="text-sm uppercase tracking-widest text-amber-400 mb-4">Welcome to Crumbl</p>
+          <h1 className="text-5xl font-bold tracking-tight mb-6">Recipes Made with Love</h1>
+          <p className="text-stone-400 text-lg max-w-xl mx-auto mb-8">
+            Discover, share, and save your favorite recipes from home cooks and food lovers around the world.
+          </p>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="bg-white rounded-md flex max-w-md mx-auto gap-2 mb-8">
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search recipes..."
-            className="flex-1 px-4 py-3 rounded-md text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
-          />
-          <button
-            type="submit"
-            className="bg-amber-500 hover:bg-amber-600 transition-colors px-4 py-3 rounded-md"
-          >
-            <Search className="h-4 w-4" />
-          </button>
-        </form>
+          <form onSubmit={handleSearch} className="flex max-w-md mx-auto gap-2 mb-8">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search recipes..."
+              className="bg-white flex-1 px-4 py-3 rounded-md text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+            />
+            <button
+              type="submit"
+              className="bg-amber-500 hover:bg-amber-600 transition-colors px-4 py-3 rounded-md"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </form>
 
-        <div className="flex gap-4 justify-center">
-          <Link
-            to="/recipes"
-            className="bg-amber-500 text-white px-6 py-3 rounded-md font-medium hover:bg-amber-600 transition-colors"
-          >
-            Browse Recipes
-          </Link>
-          <Link
-            to="/register"
-            className="border border-white text-white px-6 py-3 rounded-md font-medium hover:bg-white hover:text-stone-900 transition-colors"
-          >
-            Join Crumbl
-          </Link>
+          <div className="flex gap-4 justify-center">
+            <Link
+              to="/recipes"
+              className="bg-amber-500 text-white px-6 py-3 rounded-md font-medium hover:bg-amber-600 transition-colors"
+            >
+              Browse Recipes
+            </Link>
+            <Link
+              to="/register"
+              className="border border-white text-white px-6 py-3 rounded-md font-medium hover:bg-white hover:text-stone-900 transition-colors"
+            >
+              Join Crumbl
+            </Link>
+          </div>
         </div>
       </section>
 
