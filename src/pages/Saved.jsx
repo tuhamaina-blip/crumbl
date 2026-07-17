@@ -4,6 +4,7 @@ import { useSaved } from '@/context/SavedContext';
 import { useRecipes } from '@/context/RecipeContext';
 import RecipeCard from '@/components/RecipeCard';
 import { BookMarked, Plus } from 'lucide-react';
+import RecipeActions from '@/components/RecipeActions';
 
 function Saved() {
   const { saved } = useSaved();
@@ -83,9 +84,14 @@ function Saved() {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredRecipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
+              <div key={recipe.id}>
+                <RecipeCard recipe={recipe} />
+                {activeTab === 'My Creations' && (
+                  <RecipeActions recipeId={recipe.id} />
+                )}
+              </div>
             ))}
 
             {/* Save a New Recipe card */}
