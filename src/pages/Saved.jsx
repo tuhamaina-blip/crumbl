@@ -70,7 +70,7 @@ function Saved() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {/* Empty state with save new recipe card */}
           <Link
-            to="/recipes"
+            to={activeTab === 'Saved' ? '/recipes' : '/submit'}
             className="border-2 border-dashed border-amber-200 rounded-xl flex flex-col items-center justify-center p-8 hover:bg-amber-50 transition-colors min-h-[200px]"
           >
             <Plus className="h-8 w-8 text-amber-300 mb-2" />
