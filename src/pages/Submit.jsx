@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Plus, Trash2, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useRecipes } from '@/context/RecipeContext';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 function Submit() {
   const { user } = useAuth();
